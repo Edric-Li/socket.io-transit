@@ -48,8 +48,8 @@ const pe = new PrettyError();
 pe.skipNodeFiles();
 pe.skipPackage('express');
 
-server.listen(config.port, '0.0.0.0', () => {
+server.listen(config.get('transit.port'), '0.0.0.0', () => {
   console.log(`The server is running at http://localhost:${config.get('transit.port')}/`);
 });
 
-Start(server, config.get('transit.namespaces').split(','));
+Start(server, config.has('transit.namespaces') ? config.get('transit.namespaces').split(',') : []);

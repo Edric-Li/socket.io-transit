@@ -1,6 +1,6 @@
 {
   "name": "socket.io-transit",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "main": "server.js",
   "author": "shealtiel",
   "license": "ISC",
@@ -13,7 +13,7 @@
     "lint:fix": "eslint --fix .",
     "ci:check": "yarn setup && yarn lint --quiet && yarn flow --quiet && yarn tsc --noEmit",
     "ci:package": "yarn setup && yarn build && yarn docker:build && yarn docker:publish",
-    "docker:build":"docker build . -t ${npm_package_name}:${npm_package_version}"
+    "docker:build":"docker build . -t shealtiel/socket.io-transit:1.0.3"
   },
   "husky": {
     "hooks": {
