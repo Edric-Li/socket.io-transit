@@ -1,0 +1,112 @@
+{
+  "name": "socket.io-transit",
+  "version": "1.0.2",
+  "main": "server.js",
+  "author": "shealtiel",
+  "license": "ISC",
+  "scripts": {
+    "start": "node server.js",
+    "build": "./node_modules/.bin/babel . -d dist --extensions '.ts,.js' --ignore ./dist/,./node_modules/,./.cache/",
+    "move-files":"cp ./package.json ./README.md ./dist/ && cp -r ./config/ ./dist/cofig",
+    "publish:npm": "rm -rf ./dist && yarn build && yarn move-files && cd dist && npm publish --registry=https://registry.npmjs.org/ --access=public",
+    "lint": "yarn eslint ./ --ext .ts",
+    "lint:fix": "eslint --fix .",
+    "ci:check": "yarn setup && yarn lint --quiet && yarn flow --quiet && yarn tsc --noEmit",
+    "ci:package": "yarn setup && yarn build && yarn docker:build && yarn docker:publish",
+    "docker:build":"docker build . -t ${npm_package_name}:${npm_package_version}"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.js": [
+      "yarn eslint --fix",
+      "yarn flow focus-check",
+      "git add --force"
+    ],
+    "*.ts": [
+      "yarn tsc"
+    ]
+  },
+  "linters": {
+    "*.json": [
+      "prettier --write",
+      "git add --force"
+    ]
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.5.1",
+    "babel-register": "^6.26.0",
+    "body-parser": "^1.18.2",
+    "cheerio": "^1.0.0-rc.2",
+    "colors": "^1.3.0",
+    "compression": "^1.7.1",
+    "config": "^1.29.4",
+    "cookie-parser": "^1.4.3",
+    "cors": "^2.8.4",
+    "error-stack-parser": "^2.0.6",
+    "express": "^4.16.2",
+    "js-yaml": "^3.10.0",
+    "jschardet": "^1.6.0",
+    "jsonwebtoken": "^8.1.1",
+    "morgan": "^1.9.1",
+    "p2m-common-logger": "^1.0.4",
+    "pretty-error": "^2.1.1",
+    "socket.io": "^2.3.0",
+    "socket.io-client": "^2.3.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.5.0",
+    "@babel/core": "^7.5.0",
+    "@babel/plugin-proposal-class-properties": "^7.5.5",
+    "@babel/preset-env": "^7.5.0",
+    "@babel/preset-flow": "^7.0.0",
+    "@babel/preset-typescript": "^7.3.3",
+    "@babel/register": "^7.4.4",
+    "@types/config": "^0.0.34",
+    "@types/cors": "^2.8.5",
+    "@types/error-stack-parser": "^2.0.0",
+    "@types/express": "^4.17.0",
+    "@types/express-jwt": "^0.0.42",
+    "@types/express-mysql-session": "^1.2.2",
+    "@types/express-session": "^1.15.13",
+    "@types/fluent-ffmpeg": "^2.1.10",
+    "@types/jest": "^24.0.15",
+    "@types/lodash": "^4.14.135",
+    "@types/mkdirp": "^0.5.2",
+    "@types/node": "^10.14.16",
+    "@types/node-fetch": "^2.3.7",
+    "@types/node-schedule": "^1.2.4",
+    "@types/request": "^2.48.2",
+    "@types/rimraf": "^2.0.2",
+    "@types/shelljs": "^0.8.6",
+    "@types/socket.io": "^2.1.2",
+    "@types/socket.io-client": "^1.4.32",
+    "@types/uuid": "^3.4.5",
+    "@typescript-eslint/eslint-plugin": "^2.6.0",
+    "@typescript-eslint/parser": "^2.6.0",
+    "babel-eslint": "^8.2.6",
+    "babel-jest": "^24.9.0",
+    "babel-plugin-module-resolver": "^3.2.0",
+    "babel-preset-minify": "^0.5.0",
+    "cross-env": "^5.1.5",
+    "eslint": "^6.6.0",
+    "eslint-config-airbnb": "^18.0.1",
+    "eslint-plugin-compat": "^3.3.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-promise": "^3.8.0",
+    "eslint-plugin-react": "^7.14.3",
+    "eslint-plugin-react-hooks": "^1.7.0",
+    "eslint-staged": "^1.0.1",
+    "flow-bin": "^0.78.0",
+    "flow-typed": "^2.5.1",
+    "identity-obj-proxy": "^3.0.0",
+    "jest": "^24.9.0",
+    "lint-staged": "^7.2.2",
+    "ts-jest": "^24.0.2",
+    "typescript": "^3.6.4"
+  }
+}
